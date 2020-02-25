@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>!warrning!</title>
+    <link rel="stylesheet" type="text/css" href="../styles/textAnimation.css">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: calc(100% - 3px);
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        #slide-show {
+            overflow: hidden;
+            opacity: 0.5;
+            transition: opacity 2s;
+            /* animation: crescendo 5s alternate ease-in; */
+        }
+
+        img {
+            animation: animateElement linear 1.0s;
+            animation-iteration-count: 1;
+        }
+
+        @keyframes crescendo {
+            0% {
+                transform: scale(1.0);
+            }
+
+            100% {
+                transform: scale(0);
+            }
+        }
+
+        @keyframes animateElement {
+            0% {
+                opacity: 0;
+                transform: translate(0px, 30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translate(0px, 0px);
+            }
+        }
+
+        #text-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1000;
+            background: transparent;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="slide-show" class="img-grid">
+
+    </div>
+    <div id="text-animation" class="text-holder"></div>
+    <script src="../js/animation.js"></script>
+    <script>
+        var loadedImages = {};
+        var drawer = new TextDrawer(document.getElementById('text-animation'));
+        (function () {
+            let f = document.createDocumentFragment();
+            for (let i = 0; i < 11; i++) {
+                let column = document.createElement('div');
+                column.classList.add('column');
+                column.dataset.colNo = (i).toString();
+                f.appendChild(column);
+            }
+            document.getElementById('slide-show').appendChild(f);
+
+            setTimeout(() => {
+                loadImg(1);
+                loadImg(6);
+                loadImg(11);
+                loadImg(16);
+                loadImg(21);
+                loadImg(26);
+                loadImg(31);
+                loadImg(36);
+                loadImg(41);
+                loadImg(46);
+                loadImg(51);
+                loadImg();
+            }, 8000)
+
+            setTimeout(() => {
+                drawer.draw('typing', 'Здравей бебе...', 2000, '', () => {
+                    drawer.draw('typing', 'Това е моята изненада за теб', 3400, '', () => {
+                        drawer.draw('typing', 'Подарявам ти...', 2500, '', () => {
+                            drawer.draw('typing', 'Нашите спомени ', 4000, '&#128152;', () => {///42.6/44с
+                                drawer.draw('typing', 'С колаж от 60-на снимки,', 3000, '', () => {
+                                    drawer.draw('typing', 'ще ти припомня нашите моменти.', 3500, '', () => {
+                                        drawer.draw('typing', 'Не е на лист или хартия.. странно,', 4000, '', () => {
+                                            drawer.draw('typing', 'но е точно по моята част.', 3000, '', () => {
+                                                drawer.draw('typing', 'Не се сърди, ако видиш шантави снимки.', 4200, '', () => {
+                                                    drawer.draw('typing', 'Те ни описват най-добре.', 3000, '', () => {
+                                                        drawer.draw('typing', 'Луди...', 1200, '', () => {
+                                                            drawer.draw('typing', 'Шантави...', 1500, '', () => {
+                                                                drawer.draw('typing', 'Гастрономи...', 1800, '', () => {
+                                                                    drawer.draw('typing', 'Газари...', 1400, '', () => {
+                                                                        drawer.draw('typing', 'Но най-вече...', 2000, '', () => {
+                                                                            drawer.draw('typing', 'Влюбени...', 2000, '', () => {
+                                                                                drawer.draw('typing', 'Нека преминем към НАШАТА история', 4000, '', () => {
+                                                                                    drawer.draw('typing', 'Затегни колана и приятно гледане ', 4000, '&#128541;', () => {
+                                                                                        document.getElementById('slide-show').style.opacity = '1';
+                                                                                        document.getElementById('slide-show').style.animation  = 'crescendo 10s alternate ease-in'
+                                                                                    });
+                                                                                });
+                                                                            });
+                                                                        });
+                                                                    });
+                                                                });
+                                                            });
+                                                        });
+                                                    });
+                                                });
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
+            }, 500);
+        })();
+        function loadImg(id) {
+            if ((id || '') != '') {
+                let img = document.createElement('img');
+                img.src = `../images/${(id).toString()}.jpg`;
+
+                let colToAppend = document.querySelector(`#slide-show [data-col-no="${Math.floor((id - 1) / 5).toString()}"]`);
+                colToAppend && colToAppend.appendChild(img);
+
+                loadedImages[id] = true;
+                return;
+            }
+            if (Object.keys(loadedImages).length <= 55) {
+                let randomImg = Math.floor(Math.random() * 55) + 1;
+                let br = 0;
+                while (loadedImages[randomImg] && br < 100) {
+                    randomImg = Math.floor(Math.random() * 55) + 1;
+                    br++;
+                }
+                if (br == 100) {
+                    randomImg = '';
+                    for (let i = 1; i <= 55 && randomImg == ''; i++)
+                        randomImg = loadedImages[i] ? '' : i;
+                }
+                let img = document.createElement('img');
+                img.src = `../images/${(randomImg).toString()}.jpg`;
+
+                let colToAppend = document.querySelector(`#slide-show [data-col-no="${Math.floor((randomImg - 1) / 5).toString()}"]`);
+                colToAppend && colToAppend.appendChild(img);
+
+                loadedImages[randomImg] = true;
+                setTimeout(() => loadImg(), 1000);
+            }
+        }
+    </script>
+</body>
+
+</html>

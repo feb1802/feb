@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>!warrning!</title>
+    <link rel="stylesheet" type="text/css" href="../styles/textAnimation.css">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: calc(100% - 3px);
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        #text-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1000;
+            background: transparent;
+            justify-content: start;
+        }
+
+        #slide-show {
+            overflow: hidden;
+            transition: opacity 2s;
+            /* animation: crescendo 5s alternate ease-in; */
+        }
+
+        img {
+            animation: animateElement linear 1.0s;
+            animation-iteration-count: 1;
+        }
+
+        @keyframes crescendo {
+            0% {
+                transform: scale(1.0);
+            }
+
+            100% {
+                transform: scale(0);
+            }
+        }
+
+        @keyframes animateElement {
+            0% {
+                opacity: 0;
+                transform: translate(0px, 30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translate(0px, 0px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="slide-show" class="img-grid">
+
+    </div>
+    <div id="text-animation" class="text-holder"></div>
+    <script src="../js/animation.js"></script>
+    <script>
+        var drawer = new TextDrawer(document.getElementById('text-animation'));
+        var br = 0;
+
+        (function () {
+            document.getElementById('slide-show').style.opacity = '0.6'
+
+            drawer.draw('typing', 'След морето лятото отмина', 3000, '', () => {
+                drawer.draw('typing', 'Пак започнахме да се трудим', 4200, '', () => {
+                    drawer.draw('typing', 'и ти постигна нещо.', 2300, '', () => {
+                        drawer.draw('typing', 'Въпреки трудностите', 2500, '', () => {
+                            drawer.draw('typing', 'ти си журналист и всички се гордеем с теб', 5000, '', () => {
+                                document.getElementById('slide-show').style.opacity = '1'
+                            });
+                        });
+                    });
+                });
+            });
+
+            setTimeout(() => {
+                loadImg(59)
+                setTimeout(() => {
+                    loadImg(17)
+                    setTimeout(() => {
+                        document.getElementById('slide-show').style.opacity = '0'
+                    }, 5000)
+                }, 2000)
+            }, 10000);
+            function loadImg(id) {
+                let column = document.createElement('div');
+                column.classList.add('column');
+                column.dataset.colNo = (br).toString();
+                document.getElementById('slide-show').appendChild(column);
+
+                let img = document.createElement('img');
+                img.src = `../images/${(id).toString()}.jpg`;
+
+                let colToAppend = document.querySelector(`#slide-show [data-col-no="${(br).toString()}"]`);
+                br++;
+                colToAppend && colToAppend.appendChild(img);
+            }
+        })();
+    </script>
+</body>
+
+</html>
