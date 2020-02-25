@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>!warrning!</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: calc(100% - 2.5px);
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        #slide-holder {
+            width: 100%;
+            height: 100%;
+            outline: none;
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <iframe id="slide-holder" src=""></iframe>
+    <script>
+        const loadPromise = function (ind) {
+            return new Promise(function (resolve, reject) {
+
+                console.log(slides[ind].src);
+                slideHolder.src = slides[ind].src;
+
+                if (ind < slides.length) {
+                    resolve('fine')
+                } else {
+                    reject('error')
+                }
+
+            })
+        }
+
+        var slides = [
+            { src: 'slides/1.html', time: 60500 },// grid
+            { src: 'slides/2.html', time: 9000 },// 14.02
+            { src: 'slides/3.html', time: 12000 },// london
+            { src: 'slides/4.html', time: 10500 },// birthday Petya&Stefan
+            { src: 'slides/5.html', time: 18000 },// kj tour
+            { src: 'slides/6.html', time: 12500 },// nesebar
+            { src: 'slides/7.html', time: 11000 },// greece
+            { src: 'slides/8.html', time: 16500 },// funy
+            { src: 'slides/9.html', time: 16000 },// culture events
+            { src: 'slides/10.html', time: 17000 },// proud with you
+            { src: 'slides/11.html', time: 17000 },// proud with you
+            { src: 'slides/12.html', time: 17000 },// proud with you
+        ];
+        var slideHolder = document.getElementById('slide-holder');
+
+        (function () {
+           setTimeout(()=>load(0),10000);
+        })();
+
+        function load(ind) {
+            console.log(ind)
+            loadPromise(ind)
+                .then((res) => {
+                    time = slides[ind].time;
+                    setTimeout(() => { ind<12?load(ind+1):'' }, time)
+                })
+                .catch((err) => { });
+        }
+    </script>
+</body>
+
+</html>
